@@ -1,0 +1,4 @@
+Lidar-geog___UTM.exe huso=28 ..\..\..\output\DataSets\edificios\UTM\28 ..\..\..\output\DataSets\edificios\UTMGEO\28 > process28.log
+Lidar-geog___UTM.exe huso=29 ..\..\..\output\DataSets\edificios\UTM\29 ..\..\..\output\DataSets\edificios\UTMGEO\29 > process29.log
+Lidar-geog___UTM.exe huso=30 ..\..\..\output\DataSets\edificios\UTM\30 ..\..\..\output\DataSets\edificios\UTMGEO\30 > process30.log
+Lidar-geog___UTM.exe huso=31 ..\..\..\output\DataSets\edificios\UTM\31 ..\..\..\output\DataSets\edificios\UTMGEO\31 > process31.log

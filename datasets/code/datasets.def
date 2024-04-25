@@ -1,0 +1,8 @@
+EXPORTS
+	lee_dsMETA_global
+	lee_dsMETA_local
+	lee_dsMETA_puntos
+
+	lee_clip
+	lee_clip_string
+	aplica_clip

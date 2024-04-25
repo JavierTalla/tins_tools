@@ -1,0 +1,11 @@
+#Cualquier cosa que queramos que se ignore la ponemos en el directorio ./ignorar/
+ignorar/*
+desktop.ini
+./3dCarving/
+./fconfig/
+.vs/
+*.pdb
+*.log
+./AerotriLibs/lib/
+Debug/
+Release/

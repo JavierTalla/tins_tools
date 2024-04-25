@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+<PropertyGroup Label="Globals">
+    <CodePath>..\hgt2bmp</CodePath>
+    <ProjectGuid>{C5583162-53F1-4F01-89FC-71FF93D35186}</ProjectGuid>
+    <ConfigurationType>Application</ConfigurationType>
+</PropertyGroup>
+<Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="..\generic\dirs_io.c" />
+    <ClCompile Include="$(CodePath)\bmp2hgt.c" />
+    <ClCompile Include="$(CodePath)\hgt2bmp.c" />
+  </ItemGroup>
+</Project>

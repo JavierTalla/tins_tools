@@ -1,0 +1,9 @@
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include;
+C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um;
+C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt;
+C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared;		windef.h winerror.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um;		WinBase.h Windows.h WinUser.h etc.
+C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt;
+C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt;
+C:\Users\Javier\Software\Include 

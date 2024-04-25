@@ -1,0 +1,13 @@
+cd fconfig/buildscripts/Windows/
+CALL cl_amd64d.bat
+cd ../../../datasets/buildscripts/Windows/
+CALL cl_amd64d.bat
+cd ../../../matrizTierra/buildscripts/Windows/
+CALL cl_amd64d.bat
+cd  ../../../bmps/buildscripts/Windows/
+CALL cl_amd64d.bat
+cd ../../../tins/buildscripts/Windows/
+CALL cl_amd64d.bat
+cd ../../../3dCarving/buildscripts/Windows/	
+CALL cl_amd64d.bat
+cd ../../../

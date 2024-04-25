@@ -1,0 +1,15 @@
+EXPORTS
+	calcula_matriz___tierra
+	calcula_transf_plani_bb
+	expande_MatrizTierra
+	expande_MatrizTierra_x
+	expande_MatrizTierra_y
+	matriz___tierra_planocuadra1
+	matriz___tierra_sistema1
+	matriz___tierra_planocuadra
+	matriz___tierra_sistema
+
+	matrizmarcada___userspecs
+	matrizsuelo___userspecs
+	matriz_fondomar
+	matriz_edificios

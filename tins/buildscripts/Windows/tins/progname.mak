@@ -1,0 +1,2 @@
+progname=tins
+exename=tins

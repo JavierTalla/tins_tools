@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup Label="Globals">
+    <CodePath>..\matrizTierra\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{15F0C2C7-3F84-4765-B9F9-1DFE89E2EC78}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\include\Matriz___Tierra.h" />
+    <ClInclude Include="$(CodePath)\include\transformación.h" />
+    <ClInclude Include="$(CodePath)\s_transformación\calcular_trans.c" />
+    <ClInclude Include="$(CodePath)\s_transformación\transformar.c" />
+    <ClInclude Include="$(CodePath)\s_transformación\ajusta_áreaTierra.c" />
+    <ClCompile Include="$(CodePath)\s_transformación\transformación.th" />
+  </ItemGroup>
+</Project>

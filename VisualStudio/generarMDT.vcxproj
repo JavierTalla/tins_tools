@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup Label="Globals">
+    <CodePath>..\matrizTierra\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{7062A270-25DE-47C0-94D4-9739F99F3F90}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\include\generarMDT.h" />
+    <ClInclude Include="$(CodePath)\include\MatrizMarcadaCall.h" />
+    <ClInclude Include="$(CodePath)\include\str_MatrizTierra.h" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\generarMDTh.h" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_mask.h" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_todo.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\edificios.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_raster.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\explorar_lagos.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\fuera_tierra.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\aplica_clip.c" />
+    <ClCompile Include="$(CodePath)\s_generarMDT\matriz_zbounds.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_sistema.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_planocuadra.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\enmascara_franja.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\interpola_tile.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\abrir_tile.c" />
+    <ClInclude Include="$(CodePath)\s_generarMDT\Seleccionar_DataSet.c" />
+    <ClCompile Include="$(CodePath)\s_generarMDT\generarMDT.th" />
+  </ItemGroup>
+</Project>

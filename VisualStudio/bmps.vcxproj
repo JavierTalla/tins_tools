@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+<PropertyGroup Label="Globals">
+    <CodePath>..\bmps\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{3B58DA00-83F1-4272-8CD7-76930582A819}</ProjectGuid>
+</PropertyGroup>
+<Import Project="CommonC.props" />
+<ItemGroup>
+    <ClInclude Include="$(CodePath)\include\bmps.h" />
+    <ClInclude Include="$(CodePath)\include\bmp_geo.h" />
+    <ClInclude Include="$(CodePath)\include\str_raster.h" />
+    <ClInclude Include="$(CodePath)\s_all\tablas_color.c" />
+    <ClInclude Include="$(CodePath)\s_all\escritura_raster8.c" />
+    <ClInclude Include="$(CodePath)\s_all\escritura_raster16.c" />
+    <ClInclude Include="$(CodePath)\s_all\escritura_georref.c" />
+    <ClInclude Include="$(CodePath)\s_all\bmp_read.c" />
+    <ClCompile Include="$(CodePath)\s_all\bmps.th" />
+    <None Include="$(CodePath)\bmps.def" />
+</ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup Label="Globals">
+    <CodePath>..\datasets\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{2A5EF380-479D-42FC-A475-304E18BE0E03}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\include\ds_metadata.h" />
+    <ClInclude Include="$(CodePath)\include\str_dataset.h" />
+    <ClInclude Include="$(CodePath)\s_dsmetadata\ds_metadata.c" />
+    <ClCompile Include="$(CodePath)\s_dsmetadata\dsmetadata.th" />
+  </ItemGroup>
+</Project>

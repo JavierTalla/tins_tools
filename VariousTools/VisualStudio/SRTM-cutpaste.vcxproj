@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+<PropertyGroup Label="Globals">
+    <CodePath>..\SRTM-cutpaste</CodePath>
+    <ProjectGuid>{4A6C10FE-13BB-4E19-B026-65502B01B49F}</ProjectGuid>
+    <ConfigurationType>Application</ConfigurationType>
+</PropertyGroup>
+<Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="..\generic\dirs_io.c" />
+    <ClCompile Include="$(CodePath)\SRTM18k.c" />
+    <ClCompile Include="$(CodePath)\SRTM270.c" />
+    <ClCompile Include="$(CodePath)\SRTM3.6k.c" />
+    <ClCompile Include="$(CodePath)\SRTM900m_cerrar.c" />
+    <ClCompile Include="$(CodePath)\SRTM900m_partir.c" />
+  </ItemGroup>
+</Project>

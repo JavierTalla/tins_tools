@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+<PropertyGroup Label="Globals">
+    <CodePath>..\matrizTierra\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{5609428C-31BA-4A19-A177-15D0B0B15690}</ProjectGuid>
+</PropertyGroup>
+<Import Project="CommonC.props" />
+<ItemGroup>
+    <ClCompile Include="$(CodePath)\s_lagos\lagos.th" />
+    <ClInclude Include="$(CodePath)\s_lagos\interpreta_matriz.c" />
+    <ClInclude Include="$(CodePath)\s_lagos\lagosh.h" />
+    <ClInclude Include="$(CodePath)\s_lagos\lagosislas.c" />
+    <ClInclude Include="$(CodePath)\s_lagos\procesar_lago.c" />
+</ItemGroup>
+</Project>

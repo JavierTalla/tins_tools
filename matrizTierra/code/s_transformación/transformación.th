@@ -1,0 +1,7 @@
+﻿#include "../include_internal/matrizTierra_med.h"
+#include <math.h> //isfinite(), ceilf()
+#include <ATsistemas/ATsistemas.h>
+#include <PI.h>
+#include "calcular_trans.c" //De la Tierra a la matriz
+#include "transformar.c"
+#include "ajusta_áreaTierra.c"

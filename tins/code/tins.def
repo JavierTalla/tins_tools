@@ -1,0 +1,16 @@
+EXPORTS
+	free_TIN
+	free_TINplano
+	lee_fichero_tin
+	escribe_fichero_tin
+	escribe_tinplano
+	tinplano___tin
+	fstl___tinplano
+	lee_fichero_stl
+	escribe_fichero_stl1
+	escribe_fichero_stl2
+	tin___matriz16
+	tingrueso___matriz16_size
+	reescala_tin
+	reescalaZ_tin
+	desplazaZ_tin

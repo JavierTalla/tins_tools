@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup Label="Globals">
+    <CodePath>..\tins\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{4500CC73-B596-4A56-8B81-3DE102045448}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\include_internal\file_tin.h" />
+    <ClInclude Include="$(CodePath)\include\str_tin.h" />
+    <ClInclude Include="$(CodePath)\include\tins.h" />
+    <ClInclude Include="$(CodePath)\s_tin\tinutils.c" />
+    <ClInclude Include="$(CodePath)\s_tin\tin.c" />
+    <ClInclude Include="$(CodePath)\s_tin\escribe_tin.c" />
+    <ClInclude Include="$(CodePath)\s_tin\lee_tin.c" />
+    <ClInclude Include="$(CodePath)\s_tin\tinplano.c" />
+    <ClCompile Include="$(CodePath)\s_tin\tins.th" />
+    <None Include="$(CodePath)\tins.def" />
+  </ItemGroup>
+</Project>

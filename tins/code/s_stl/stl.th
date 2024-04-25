@@ -1,0 +1,9 @@
+#define COMPILING_TINS
+#include "../include/tins.h"
+#include <malloc.h>
+#include <math.h> //fabsf
+#include <stdlib.h> //div_t
+#include <assert.h>
+#include "stlh.h"
+#include "lee_stl.c"
+#include "escribe_stl.c"

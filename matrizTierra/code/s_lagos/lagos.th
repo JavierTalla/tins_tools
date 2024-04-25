@@ -1,0 +1,6 @@
+﻿#include "../include_internal/matrizTierra_med.h"
+#include <malloc.h>
+#include "lagosh.h"
+#include "lagosislas.c"
+#include "procesar_lago.c"
+#include "interpreta_matriz.c"

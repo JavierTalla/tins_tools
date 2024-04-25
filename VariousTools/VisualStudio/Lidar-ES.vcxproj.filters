@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Subordinated Source Files">
+      <UniqueIdentifier>{082e044c-2b77-4cf7-b69f-2dc12d4c9c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translation Heads">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CodePath)\MDT03.c">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CodePath)\MDT5Canarias.c">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CodePath)\MDT5Peninsula.c">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CodePath)\Lidar-geog___UTM.c">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\MDT5Canarias.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\MDT5cutpaste.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\MDT5Peninsula.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\MDT5cutpaste.c">
+      <Filter>Translation Heads</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

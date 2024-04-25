@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+<PropertyGroup Label="Globals">
+    <CodePath>..\Lidar-ES</CodePath>
+    <ProjectGuid>{AF903888-1AD2-4FE4-8FC0-04BDBE5AFA21}</ProjectGuid>
+    <ConfigurationType>Application</ConfigurationType>
+</PropertyGroup>
+<Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClCompile Include="$(CodePath)\Lidar-geog___UTM.c" />
+    <ClCompile Include="$(CodePath)\MDT03.c" />
+    <ClCompile Include="$(CodePath)\MDT5Canarias.c" />
+    <ClInclude Include="$(CodePath)\MDT5Canarias.h" />
+    <ClInclude Include="$(CodePath)\MDT5cutpaste.c" />
+    <ClCompile Include="$(CodePath)\MDT5Peninsula.c" />
+    <ClInclude Include="$(CodePath)\MDT5cutpaste.h" />
+    <ClInclude Include="$(CodePath)\MDT5Peninsula.h" />
+  </ItemGroup>
+</Project>

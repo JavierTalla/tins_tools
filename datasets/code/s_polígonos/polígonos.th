@@ -1,0 +1,22 @@
+﻿#include "../include/clip_áreas.h"
+#include <malloc.h>
+#include <ATcrt/ATsystem.h>
+#include <ATcrt/ATarrays.h>
+#include <ATcrt/ATcrt_utils.h>
+#include <ATcrt/shrt_path.h>
+#include <ATcrt/AT_fileutils.h>
+#include <ATcrt/fileinput_linecount.h>
+#include <ATcrt/definesBufferto8.h>
+#define sinline static inline
+
+//Estructura que se pasan las funciones que leen el fichero de configuración
+typedef struct{
+	Bufferto8 *blog; //Fichero de log
+	Growing_Polígono_xy *vec;
+	uint nfile; //Current file being read
+	uint8m file_lev; //Level of inntermost file being read. The outermost is 1.
+} Globals;
+
+#include "lee_clip_inline.c"
+#include "lee_clip.c"
+#include "aplica_clip.c"

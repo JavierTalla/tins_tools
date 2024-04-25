@@ -1,0 +1,13 @@
+#include "../include/bmp_geo.h"
+#include <malloc.h>
+#include <ATcrt/Atcrt_utils.h>
+#include <ATcrt/ATfileoutput.h>
+#include <ATcrt/ATfiles.h>
+//#include <stdlib.h> //div()
+#include <math.h> //ceilf
+#define elif else if
+#include "tablas_color.c"
+#include "escritura_georref.c"
+#include "escritura_raster8.c"
+#include "escritura_raster16.c"
+#include "bmp_read.c"

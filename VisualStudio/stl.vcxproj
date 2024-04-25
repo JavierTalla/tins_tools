@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup Label="Globals">
+    <CodePath>..\tins\code</CodePath>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ProjectGuid>{D96CFD96-F0CD-4C64-9DAF-AE2E2BB5C1C3}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="CommonC.props" />
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\s_stl\file_stl.h" />
+    <ClInclude Include="$(CodePath)\s_stl\stlh.h" />
+    <ClInclude Include="$(CodePath)\s_stl\escribe_stl.c" />
+    <ClInclude Include="$(CodePath)\s_stl\lee_stl.c" />
+    <None Include="$(CodePath)\s_stl\stl.th" />
+  </ItemGroup>
+</Project>

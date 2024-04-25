@@ -1,0 +1,21 @@
+#define COMPILING_TINS
+#include "../include/tins.h"
+#include <malloc.h>
+#include <string.h> //fabsf
+#include <stdlib.h> //div_t
+//#include <assert.h>
+#include <ATcrt/ATcrt_utils.h>
+#include <ATcrt/ATarrays.h>
+#include <ATcrt/ATfileinput.h>
+#include <ATcrt/ATfileoutput.h>
+#include "../include_internal/file_tin.h"
+#include "tinutils.c"
+#include "tin.c"
+#include <ATcrt/ATmem.h>
+#define elif else if
+#define P_eq(P,EQ,Q) (P).X EQ ((Q).X), (P).Y EQ ((Q).Y), (P).Z EQ ((Q).Z)
+#define P_op(P, EQ, Q,OP,R) (P).X EQ ((Q).X OP (R).X),   (P).Y EQ ((Q).Y OP (R).Y),   (P).Z EQ ((Q).Z OP (R).Z)
+#define NOMEM_RETURN_CODE AT_NOMEM
+#include "lee_tin.c"
+#include "tinplano.c"
+#include "escribe_tin.c"

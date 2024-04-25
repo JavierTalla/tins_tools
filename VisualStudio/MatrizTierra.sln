@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transformación", "transformación.vcxproj", "{15F0C2C7-3F84-4765-B9F9-1DFE89E2EC78}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "generarMDT", "generarMDT.vcxproj", "{7062A270-25DE-47C0-94D4-9739F99F3F90}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lagos", "lagos.vcxproj", "{66F3FF36-EC46-491E-A1A4-6FA5060FC0CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8E6FA705-3863-40BC-8256-0ADEB86C9682}"
+	ProjectSection(SolutionItems) = preProject
+		..\code\matrizTierra.def = ..\code\matrizTierra.def
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Header files", "Header files", "{CAF13F42-2350-4476-88B4-4A5B53B8B5DC}"
+	ProjectSection(SolutionItems) = preProject
+		..\code\include\matrizTierra.h = ..\code\include\matrizTierra.h
+		..\code\include\MatrizTierra_structs.h = ..\code\include\MatrizTierra_structs.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Header internal", "Header internal", "{FB54FD82-38E2-4F59-8AF8-B34B6986BBDF}"
+	ProjectSection(SolutionItems) = preProject
+		..\code\include_internal\MatrizTierra_med.h = ..\code\include_internal\MatrizTierra_med.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15F0C2C7-3F84-4765-B9F9-1DFE89E2EC78}.Debug|x64.ActiveCfg = Debug|x64
+		{15F0C2C7-3F84-4765-B9F9-1DFE89E2EC78}.Debug|x64.Build.0 = Debug|x64
+		{15F0C2C7-3F84-4765-B9F9-1DFE89E2EC78}.Release|x64.ActiveCfg = Release|x64
+		{15F0C2C7-3F84-4765-B9F9-1DFE89E2EC78}.Release|x64.Build.0 = Release|x64
+		{7062A270-25DE-47C0-94D4-9739F99F3F90}.Debug|x64.ActiveCfg = Debug|x64
+		{7062A270-25DE-47C0-94D4-9739F99F3F90}.Debug|x64.Build.0 = Debug|x64
+		{7062A270-25DE-47C0-94D4-9739F99F3F90}.Release|x64.ActiveCfg = Release|x64
+		{7062A270-25DE-47C0-94D4-9739F99F3F90}.Release|x64.Build.0 = Release|x64
+		{66F3FF36-EC46-491E-A1A4-6FA5060FC0CF}.Debug|x64.ActiveCfg = Debug|x64
+		{66F3FF36-EC46-491E-A1A4-6FA5060FC0CF}.Debug|x64.Build.0 = Debug|x64
+		{66F3FF36-EC46-491E-A1A4-6FA5060FC0CF}.Release|x64.ActiveCfg = Release|x64
+		{66F3FF36-EC46-491E-A1A4-6FA5060FC0CF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CAF13F42-2350-4476-88B4-4A5B53B8B5DC} = {8E6FA705-3863-40BC-8256-0ADEB86C9682}
+		{FB54FD82-38E2-4F59-8AF8-B34B6986BBDF} = {8E6FA705-3863-40BC-8256-0ADEB86C9682}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7746A83C-95FD-4D19-B2E3-A5378F032F26}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal

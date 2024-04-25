@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ItemGroup>
+    <Filter Include="Translation Heads">
+      <UniqueIdentifier>{17876381-9b96-4124-8e0d-025ff94c3ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Subordinated Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header internal">
+      <UniqueIdentifier>{4af63f19-3f8b-45f5-a228-ee58773ddb19}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\include\tins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_tin\tin.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\include\str_tin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_tin\escribe_tin.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_tin\tinutils.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\include_internal\file_tin.h">
+      <Filter>Header internal</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_tin\lee_tin.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_tin\tinplano.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CodePath)\s_tin\tins.th">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(CodePath)\tins.def" />
+  </ItemGroup>
+</Project>

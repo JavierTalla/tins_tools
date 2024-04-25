@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ItemGroup>
+    <Filter Include="Translation Heads">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Subordinated Source Files">
+      <UniqueIdentifier>{d8836d06-7c12-4784-9b29-ff4129513973}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CodePath)\main\main.c">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\main\main_utils.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

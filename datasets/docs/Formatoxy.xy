@@ -1,0 +1,64 @@
+% Los ficheros xy definen polígonos.
+% El carácter % introduce comentarios.
+% Cada polígono se define como una sucesión de coordenadas, cada punto en una línea.
+% En caso de que sean valores de latitud y longitud, deben ir en ese orden. Por ejemplo
+
+42.3449 10.2970
+42.3516 10.3064
+42.3408 10.3159
+42.3239 10.3132
+42.3280 10.2944
+
+% define un polígono en el Mediterráneo.
+% El final de un polígono lo marca una linea en blanco o el final del fichero. Así, las
+% siguientes líneas definen dos polígonos.
+
+42.3449 10.2970
+42.3516 10.3064
+42.3408 10.3159
+42.3239 10.3132
+42.3280 10.2944
+
+40.7956 13.4190
+40.8002 13.4241
+40.8015 13.4320
+40.7908 13.4269
+40.7859 13.4147
+40.7956 13.4190
+
+% El primer punto del polígono puede aparecer también cerrando el polígono. En el
+% ejemplo anterior, en el primer polígono el primer punto no se repitió al final, mientras
+% que en el segundo, sí.
+
+% El carácter ! introduce un nombre de fichero, cuyo contenido se insertará literalmente
+% en esa posición, salvo porque se eliminan las líneas vacías y comentarios al principio y
+% al final del fichero. Así, el fichero definiendo España podría ser
+
+!España_península.xy
+
+!España_varios.xy
+
+!Baleares.xy
+
+!Canarias.xy
+
+% Nótese las líneas en blanco entre unas y otras llamadas !. Si se hubieran escrito sin esos espacios
+% formaría todo un único polígono. Por esto también se puede emplear una llamada ! para parte
+% de un polígono. Así, España_península.xy podría contener
+
+% ...
+42.4315 3.1810
+42.4259 3.1378
+42.4250 3.1117
+42.4272 3.0861
+42.43201 3.0656
+!ESP_FRA.xy
+42.8292 -0.3517
+42.8013 -0.3997
+42.7907 -0.4239
+42.7889 -0.4545
+% ...
+
+% en donde ESP_FRA.xy contendría la línea de frontera entre España y Francia.
+% Si un archivo insertado mediante ! contuviera líneas vacías entre las coordenadas, estos mismos
+% finales de polígono se transmiten al fichero desde el que se ha llamado.

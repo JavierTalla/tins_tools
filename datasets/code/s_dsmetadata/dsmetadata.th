@@ -1,0 +1,7 @@
+﻿#include "../include/ds_metadata.h"
+#include <malloc.h>
+#include <stdlib.h> //for abs
+#include <ATcrt/ATcrt_utils.h>
+#include <ATcrt/ATfileinput.h>
+#include "../../extern_libs/include/fconfig/fconfig_utils.h" //For the single function lee_valida_sLongitudTierraPeq
+#include "ds_metadata.c"

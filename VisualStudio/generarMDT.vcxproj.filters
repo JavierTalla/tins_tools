@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ItemGroup>
+    <Filter Include="Translation Heads">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Subordinated Source Files">
+      <UniqueIdentifier>{6dba4929-24f8-429e-b8d2-03f2b73a92a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header internal">
+      <UniqueIdentifier>{812d0ce0-51af-4cc6-ba84-e6dcb1d7de3a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_todo.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\edificios.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_raster.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\Seleccionar_DataSet.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\interpola_tile.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\include\str_MatrizTierra.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_planocuadra.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_sistema.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\abrir_tile.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\matriz_mask.h">
+      <Filter>Header internal</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\generarMDTh.h">
+      <Filter>Header internal</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\include\generarMDT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\explorar_lagos.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\fuera_tierra.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\include\MatrizMarcadaCall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\aplica_clip.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CodePath)\s_generarMDT\enmascara_franja.c">
+      <Filter>Translation Heads</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CodePath)\s_generarMDT\generarMDT.th">
+      <Filter>Translation Heads</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CodePath)\s_generarMDT\matriz_zbounds.c">
+      <Filter>Subordinated Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

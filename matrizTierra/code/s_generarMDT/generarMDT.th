@@ -1,0 +1,19 @@
+﻿#include "../include_internal/matrizTierra_med.h"
+#include "../../extern_libs/include/datasets/clip_áreas.h"
+#include <malloc.h>
+#include <math.h> //para cos()
+#include <assert.h>
+#include <ATsistemas/ATsistemas.h>
+#include "generarMDTh.h"
+#include "Seleccionar_DataSet.c"
+#include "matriz_zbounds.c"
+#include "enmascara_franja.c"
+#include "aplica_clip.c"
+#include "abrir_tile.c"
+#include "interpola_tile.c"
+#include "matriz_planocuadra.c"
+#include "matriz_sistema.c"
+#include "matriz_raster.c"
+#include "edificios.c"
+#include "explorar_lagos.c"
+#include "matriz_todo.c"

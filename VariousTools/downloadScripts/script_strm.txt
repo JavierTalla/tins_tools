@@ -1,0 +1,125 @@
+function conectar(){
+domain="https://e4ftl01.cr.usgs.gov/SRTM/SRTMGL1.003/2000.02.11/N40E110.SRTMGL1.hgt.zip"
+curl -v --cookie-jar cookiefile2 -o nacho -u woodworld:3d.Carving "$domain" 1>debug 2>&1
+cat debug | grep -e DATA -e Location
+cat cookiefile2
+echo "--------------------------------------------------"
+
+domain=$(grep Location debug | awk '{print $3}')
+domain=${domain%$'\r'}
+>debug
+curl -v -o nacho --cookie-jar cookiefile2  -u woodworld:3d.Carving "$domain" 1>debug 2>&1
+cat debug | grep -e DATA -e Location
+cat cookiefile2
+echo "--------------------------------------------------"
+
+domain=$(grep Location debug | awk '{print $3}')
+domain=${domain%$'\r'}
+>debug
+curl -v -o nacho --cookie-jar cookiefile2   -u woodworld:3d.Carving "$domain" 1>debug 2>&1
+cat debug | grep -e DATA -e Location
+cat cookiefile2
+echo "--------------------------------------------------"
+
+}
+
+function downloadTile(){
+   latitud=$1
+   nlatitud=$2
+   longitud=$3
+   nlongitud=$4
+   
+   #nombre="${latitud}$(printf %02d ${nlatitud})${longitud}$(printf %03d ${nlongitud}).SRTMGL1.hgt.zip"
+	#domain="https://e4ftl01.cr.usgs.gov/SRTM/SRTMGL1.003/2000.02.11/${nombre}"
+	#echo $nombre
+	#curl  -o "${nombre}" -b cookiefile2   "$domain" 
+	
+	#nombre="${latitud}$(printf %02d ${nlatitud})${longitud}$(printf %03d ${nlongitud}).SRTMGL3.hgt.zip"
+	nombre="${latitud}${nlatitud}${longitud}${nlongitud}.SRTMGL3.hgt.zip"
+	domain="https://e4ftl01.cr.usgs.gov/SRTM/SRTMGL3.003/2000.02.11/${nombre}"
+	curl  -o "${nombre}" -b cookiefile2   "$domain" 
+	return
+	if [ -f "${nombre}" ]
+	then 
+	    echo si
+	else    
+        echo no
+	    domain="https://e4ftl01.cr.usgs.gov/SRTM/SRTMGL1.003/2000.02.11/${nombre}"
+	    curl  -o "${nombre}" -b cookiefile2   "$domain" 
+	fi
+}
+
+
+
+function uploadTile(){
+latitud=$1
+nlatitud=$2
+longitud=$3
+nlongitud=$4
+nombre="${latitud}$(printf %02d ${nlatitud})${longitud}$(printf %03d ${nlongitud}).SRTMGL1.hgt.zip"
+if [ -f "${nombre}" ]
+then
+    echo si
+    tamanio=$(ll ${nombre} | awk '{print $5}')
+    if [ ${tamanio} > 500 ]
+    then
+        uploadTileSCP $nombre
+    fi
+fi
+
+}
+	
+
+function uploadTileSCP(){
+nombre=$1
+protocolo="sftp"
+maquina="unodelostrece.com"
+puerto="3001"
+usuario="carving3d"
+contra="j6.y1S2dlxuye"
+path="3dcarvingdata"
+tipo="strm"
+echo $nombre
+
+echo "scp ${nombre} ${usuario}@${contra}:maquina:/${path}/${tipo}/${nombre}"
+sftp [user@]host[:file ...]
+
+cd /path/to/output
+/usr/bin/sftp ${usuario}@remote.com <<-EOF
+cd /${path}/${tipo}
+put  $nombre
+exit
+EOF
+}
+
+function downloadTiles(){
+Lat=$1
+Long=$4
+for i in `seq ${2} ${3}`
+do	
+   conectar
+   for j in `seq ${5} ${6}`
+   do   
+	 downloadTile ${Lat} ${i} ${Long} ${j}
+	 #downloadWaterTile ${Lat} ${i} ${Long} ${j}
+   done
+done
+}
+
+## canarias W20 N26
+## Francia E7 N44  east 0
+
+#downloadTiles N 0 90 E 0 180
+#downloadTiles N 0 90 W 0 180
+#downloadTiles S 0 90 E 0 180
+#downloadTiles S 0 90 W 0 180
+
+sleep 7200
+downloadTiles S 0 90 W 0 180
+
+
+#downloadTiles N 26 26 W 0 0
+
+rm cookiefile cookies.txt
+
+

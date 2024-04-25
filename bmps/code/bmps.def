@@ -1,0 +1,13 @@
+EXPORTS
+	headerb8_colores
+	headerb8_tabla
+	headerc8
+	escribe_bmp8
+
+	headerc16
+	escribe_bmp16
+
+	read_bmphead
+
+	escribe_bmp8_geo
+	escribe_bmp16_geo
