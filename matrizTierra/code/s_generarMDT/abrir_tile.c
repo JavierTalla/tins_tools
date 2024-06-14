@@ -35,7 +35,7 @@ Return:
 	TILE_BadSize
 
 Si se devuelve TILE_OPENED habrá copiado el contenido del fichero en tile */
-static int abrir_tile_gz(const char8_t *path, uint16_t *tile, uint npoints){
+static int abrir_tile_gz(char8_t *path, uint16_t *tile, uint npoints){
 	char8_t *ext;
 #ifdef _WIN32
 	const char * const sgz="\"\"C:\\Program Files\\7-Zip\\7z\" e -aoa "; //La comilla de cierre se completará tras escribir el nombre del fichero
