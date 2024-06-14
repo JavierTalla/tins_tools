@@ -92,7 +92,7 @@ else
 CFLAGS+= -D _DEBUG -g -O0
 endif
 
-CFLAGS+= -c -x c -std=c11 -funsigned-char -fvisibility=internal -isystem $(ATinclude) -include $(ATinclude)ATcrt/warnings_$(COMPILER).h
+CFLAGS+= -c -x c -std=c2x -funsigned-char -fvisibility=internal -isystem $(ATinclude) -include $(ATinclude)ATcrt/warnings_$(COMPILER).h
 CFLAGS+= -o $@
 
 #ar

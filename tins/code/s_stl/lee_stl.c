@@ -71,7 +71,6 @@ int lee_fichero_stl(const char8_t *ftin, TINPlano *tin){
 	return 0;
 
 salida_outofmem:
-	free(puntos.ppio);
 	free(tin->triángulos);
 	free(puntos.ppio);
 	free(buf);

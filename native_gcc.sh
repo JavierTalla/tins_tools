@@ -1,6 +1,7 @@
 #!/bin/bash
-source fconfig/buildscripts/Linux/gcc-r.sh
-source datasets/buildscripts/Linux/gcc-r.sh
-source matrizTierra/buildscripts/Linux/gcc-r.sh
-source bmps/buildscripts/Linux/gcc-r.sh
-source tins/buildscripts/Linux/gcc-r.sh
+#source fconfig/buildscripts/Linux/gcc-r.sh
+cd fconfig/buildscripts/Linux/;	source gcc-r.sh; cd ../../../
+cd datasets/buildscripts/Linux/;	source gcc-r.sh; cd ../../../
+cd matrizTierra/buildscripts/Linux/;	source gcc-r.sh; cd ../../../
+cd bmps/buildscripts/Linux;		source gcc-r.sh; cd ../../../
+cd tins/buildscripts/Linux/;		source gcc-r.sh; cd ../../../
