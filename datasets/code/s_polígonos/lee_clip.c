@@ -15,7 +15,7 @@ int lee_clip_generic(u8int type, const char8_t *file_or_s, Growing_Polígono_xy 
 	if(type==TYPE_FILE) nret=lee_clip_inline(file_or_s,&globals);
 	else nret=lee_clip_scratch(file_or_s,&globals);
 	ifunlike(nret!=0){
-		if(nret<0 && nret!=AT_NOMEM && log!=NULL) towrite_string(log,"El fichero no se ha podido abrir\n");
+		if(nret<0 && nret!=AT_NOMEM && log!=NULL) towrite_string(log,u8"El fichero no se ha podido abrir\n");
 		goto salida_mala;
 	}
 	ifunlike((nret=close_polygon(&globals,0))<0) goto salida_mala;

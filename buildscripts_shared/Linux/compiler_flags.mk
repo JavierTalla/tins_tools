@@ -80,7 +80,8 @@ ifeq ($(compiler),clang)
 CFLAGS+= -fno-show-column -Wpedantic -Wall -Wextra
 #-Weverything
 else ifeq ($(compiler),gcc)
-CFLAGS+= -fno-show-column -Wpedantic -Wall -Wextra
+#The compiler diagnoses missmatch in signedness from unsigned char* to char*, which is wrong since -funsigned-char is passed
+CFLAGS+= -fno-show-column -Wpedantic -Wall -Wextra -Wno-pointer-sign
 else
 CFLAGS+= -Wall
 endif

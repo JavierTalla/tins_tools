@@ -22,13 +22,14 @@
 #define TIN2STL 2
 #define STL2TIN 3
 
-int main(int _unused(argc), charfile_t **argv){
+int main(int _unused(argc), charmain_t **_argv){
 	bint bname;
 	u8int OPER;
 	int nret;
 	struct OutDir od;
 	TIN tin;
 	TINPlano tinpl;
+	charfile_t **argv=(charfile_t **)_argv;
 
 #ifdef _DEBUG
 	#define LETRA "d"

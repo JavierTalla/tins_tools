@@ -9,7 +9,7 @@ sinline void log_indent(Bufferto8 *blog, uint8m indent){
 	if(blog!=NULL) do_log_indent(blog,indent);
 }
 
-#define Write_Diagnostic(blog,on,line,Diag,s,...) towritef(blog, "(%u) " Diag ": " s "\n", line, __VA_ARGS__);
+#define Write_Diagnostic(blog,on,line,Diag,s,...) towritef(blog, u8"(%u) " Diag ": " s "\n", line, __VA_ARGS__);
 #define Write_Error(blog,indent,line,s,...) if(blog!=NULL){do_log_indent(blog,indent); Write_Diagnostic(blog,on,line,"Error",s, __VA_ARGS__)}
 #define Write_Warning(blog,indent,line,s,...)  if(blog!=NULL){do_log_indent(blog,indent); Write_Diagnostic(blog,on,line,"Warning",s, __VA_ARGS__)}
 
@@ -18,7 +18,7 @@ sinline void log_indent(Bufferto8 *blog, uint8m indent){
 #define ERROR_s(s)			Write_Error(globals->blog,globals->file_lev,GET_LINE,"%s",s)
 #define WARNING_s(s)		Write_Warning(globals->blog,globals->file_lev,GET_LINE,s,0)
 
-#define LOG_strings(...)	if(globals->blog!=NULL){do_log_indent(globals->blog,globals->file_lev); towritef(globals->blog, "(%u) ",GET_LINE);\
+#define LOG_strings(...)	if(globals->blog!=NULL){do_log_indent(globals->blog,globals->file_lev); towritef(globals->blog, u8"(%u) ",GET_LINE);\
 																towrite_many_strings(globals->blog,__VA_ARGS__,NULL);}
 
 //Return 0 o 1.
@@ -32,7 +32,7 @@ static inline int lee_two_floats(Puntoxy_float *p, Bufferti8_lc *buffer){
 static void initial_tasks(Globals *globals, const char8_t *fconfig, Bufferti8_lc *buffer, char8_t ruta_this[SHRT_PATH]){
 	if(globals->blog!=NULL){
 		do_log_indent(globals->blog,globals->file_lev);
-		towrite_many_strings(globals->blog,u8"(Archivo ",fconfig,"\n",NULL);
+		towrite_many_strings(globals->blog,u8"(Archivo ",fconfig,u8"\n",NULL);
 	}
 	Bufferti_lc_setup(*buffer);
 	globals->file_lev++;

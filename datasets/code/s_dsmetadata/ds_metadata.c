@@ -9,12 +9,12 @@
 //These are for buffer.pc pointing to a ' ','\t','\n'-ended word
 //La palabra no puede estar terminada por '%'; es decir, no puede aparecer un comentario
 //inmediatamente pegado a una palabra, pues se tomaría como parte de ella.
-#define isVALb(s) (strcmp8_b(buf->pc,s)==0)
+#define isVALb(s) (strcmp8_b(buf->pc,(const char8_t*)s)==0)
 #define ifVALb(s) if(isVALb(s))
 #define elifVALb(s) else ifVALb(s)
 
 //These are to be used for ptr pointing to a '\0'-ended word
-#define isKEY(s) (strcmp8(ptr,s)==0)
+#define isKEY(s) (strcmp8(ptr,(const char8_t*)s)==0)
 #define ifKEY(s) if(isKEY(s))
 #define elifKEY(s) else ifKEY(s)
 
@@ -129,7 +129,7 @@ sinline int lee_pasoxy_local(Bufferti8 *buf, sint16m *dato){
 
 #undef buffer
 #undef isVALb
-#define isVALb(s) (strcmp8_b(buffer.pc,s)==0)
+#define isVALb(s) (strcmp8_b(buffer.pc,(const char8_t*)s)==0)
 
 //Devuelve 1 si el valor de alguna clave es erróneo
 //Las claves que no reconozca las ingora.

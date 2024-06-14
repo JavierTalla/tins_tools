@@ -10,11 +10,11 @@ Return:
 	TILE_BadSize
 
 Si se devuelve TILE_OPENED habrá copiado el contenido del fichero en tile */
-int abrir_tile(char8_t *path, uint16_t *tile, uint npoints){
+int abrir_tile(const char8_t *path, uint16_t *tile, uint npoints){
 	FILE_TYPE hgt;
 
 	if(fileclass_utf8(path)!=ATFILETYPE_FILE) return TILE_NONEXISTENT;
-	FOPEN_B(hgt,path);
+	FOPEN_B(hgt,(const char*)path);
 	if(OPEN_FAILURE(hgt)) return TILE_OpenFailure;
 	size_t k=FREAD(tile,hgt,sizeof(uint16_t),npoints);
 	FCLOSE(hgt);
@@ -35,7 +35,7 @@ Return:
 	TILE_BadSize
 
 Si se devuelve TILE_OPENED habrá copiado el contenido del fichero en tile */
-static int abrir_tile_gz(char8_t *path, uint16_t *tile, uint npoints){
+static int abrir_tile_gz(const char8_t *path, uint16_t *tile, uint npoints){
 	char8_t *ext;
 #ifdef _WIN32
 	const char * const sgz="\"\"C:\\Program Files\\7-Zip\\7z\" e -aoa "; //La comilla de cierre se completará tras escribir el nombre del fichero
