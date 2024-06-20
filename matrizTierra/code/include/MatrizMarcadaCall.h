@@ -26,7 +26,7 @@ typedef struct{
 	} edificios;
 	Opciones_Lagos lagos;
 	bint fuera_is_agua;
-	EarthHeight h_fuera; //MAX_UEARTHHEIGHT indica que el programa escoja.
+	EarthHeight h_fuera; //MAX_EARTHHEIGHT indica que el programa escoja.
 } OpcionesMDTierra;
 
 /* DataSets */

@@ -7,10 +7,11 @@ typedef sint16m EarthHeight;
 typedef uint16m uEarthHeight;
 #define UEARTHHEIGHT_BITS 16
 #define MAX_UEARTHHEIGHT 0xFFFF //65535 = 8192*8-1
+#define MAX_EARTHHEIGHT 0x7FFF
 
 /* Estructura que define el sistema de Z de los elementos almacenados en una MatrizTierra
 Los valores almacenados estarán en el intervalo [escala*(zmin-offset), escala*(zmax-offset)].
-En particular, ningún valor es menor que offset.*/
+offset<=zmin. Es decir, ningún valor de z en el terreno es menor que offset.*/
 typedef struct{
 	//Los dos valores necesarios para la transformación
 	EarthHeight offset;	//Los puntos que se almacenan con z cero tienen este valor de z en la realidad, en metros.
@@ -129,18 +130,18 @@ typedef struct{
 /*Macros para la estrcutura ZBounds de MatrizTierra*/
 
 //Pasa de un valor en el terreno en metros al valor almacenado en la matriz
-#define MATRIZ_STORED___GROUND(z,escala,offset) (uEarthHeight)((uint8m)(escala)*(uEarthHeight)((z)-(offset)))
+#define MATRIZ_STORED___GROUND(z,zb) (uEarthHeight)((uint8m)((zb).escala)*(uEarthHeight)((z)-((zb).offset)))
 //zb es zbounds. Devuelve el valor almacenado en matriz para un valor z=0 en el terreno (el nivel del mar)
-#define MATRIZ_STORED___0(zb) MATRIZ_STORED___GROUND(0,(zb).escala,(zb).offset)
+#define MATRIZ_STORED___0(zb) MATRIZ_STORED___GROUND(0,zb)
 //zb es zbounds. Los valores devueltos por estas macros abarcan todo lo almacenado en matriz.
 //Si se quiere exactamente los mínimos y máximos almacenados, recórrase la matriz . La diferencia, si existe, se debe
 //solamente al redondeo al dividir: los valores de zb están en metros, los de matriz pueden estar con más resolución.
-#define MATRIZ_MIN_STORED(zb) MATRIZ_STORED___GROUND((zb).zmin,(zb).escala,(zb).offset)
-#define MATRIZ_MAX_STORED(zb) MATRIZ_STORED___GROUND((zb).zmax,(zb).escala,(zb).offset)
+#define MATRIZ_MIN_STORED(zb) MATRIZ_STORED___GROUND((zb).zmin,zb)
+#define MATRIZ_MAX_STORED(zb) MATRIZ_STORED___GROUND((zb).zmax,zb)
 //Sin contar los fondos de lagos y mares, pero sí su superficie
-#define MATRIZ_MIN_STORED_NOFONDO(zb) MATRIZ_STORED___GROUND((zb).tierra.zmin,(zb).escala,(zb).offset)
+#define MATRIZ_MIN_STORED_NOFONDO(zb) MATRIZ_STORED___GROUND((zb).tierra.zmin,zb)
 //El terreno sin fondos ni edificios
-#define MATRIZ_MAX_STORED_TIERRA(zb) MATRIZ_STORED___GROUND((zb).tierra.zmax,(zb).escala,(zb).offset)
+#define MATRIZ_MAX_STORED_TIERRA(zb) MATRIZ_STORED___GROUND((zb).tierra.zmax,zb)
 
 //Pasan de un valor almacenado en la matriz al valor en el terreno en metros
 #define MATRIZ_GROUND___STORED_ROUNDUP(z,zb) ((EarthHeight)(((z)+(zb).escala-1)/(zb).escala)+(zb).offset)
