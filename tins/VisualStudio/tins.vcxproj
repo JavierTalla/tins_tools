@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup Label="Globals">
-    <CodePath>..\tins\code</CodePath>
+    <CodePath>..\code</CodePath>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <ProjectGuid>{4500CC73-B596-4A56-8B81-3DE102045448}</ProjectGuid>
   </PropertyGroup>

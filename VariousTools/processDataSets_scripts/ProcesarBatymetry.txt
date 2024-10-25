@@ -1,0 +1,10 @@
+mkdir E:\DataSets\bathymetry900m\partidos
+mkdir E:\DataSets\bathymetry900m\cerrados
+SRTM900m_partir E:\DataSets\bathymetry900m E:\DataSets\bathymetry900m\partidos > bathy_partir.log
+SRTM900m_cerrar E:\DataSets\bathymetry900m\partidos E:\DataSets\bathymetry900m\cerrados > bathy_cerrar.log
+
+rmdir E:\DataSets\bathymetry900m\partidos /S/Q
+mkdir E:\DataSets\bathymetry3.6k
+mkdir E:\DataSets\bathymetry18k
+SRTM3.6k E:\DataSets\bathymetry900m\cerrados E:\DataSets\bathymetry3.6k > bathy3.6k.log
+SRTM18k E:\DataSets\bathymetry3.6k E:\DataSets\bathymetry18k > bathy18k.log

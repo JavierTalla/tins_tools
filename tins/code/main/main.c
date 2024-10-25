@@ -18,6 +18,7 @@
 	#define main wmain
 #endif
 
+#define OPER_NONE 0
 #define TIN2TIN 1
 #define TIN2STL 2
 #define STL2TIN 3
@@ -47,13 +48,27 @@ int main(int _unused(argc), charmain_t **_argv){
 	bname=0;
 #endif
 	if(*argv!=NULL){
+		OPER=OPER_NONE;
 		charfile_t *pg;
-		if(bname) pg=get_progname(*argv);
-		else pg=*argv;
-		if(strcmpargv(pg,"tin2tin"LETRA)==0) OPER=TIN2TIN;
-		else if(strcmpargv(pg,"tin2stl"LETRA)==0) OPER=TIN2STL;
-		else if(strcmpargv(pg,"stl2tin"LETRA)==0) OPER=STL2TIN;
-		else{
+		if(bname){
+			pg=get_progname(*argv);
+		#ifdef _DEBUG
+			if(strcmpargv(pg,"tin2tin"LETRA)==0) OPER=TIN2TIN;
+			else if(strcmpargv(pg,"tin2stl"LETRA)==0) OPER=TIN2STL;
+			else if(strcmpargv(pg,"stl2tin"LETRA)==0) OPER=STL2TIN;
+		#endif
+		}else{
+			pg=*argv;
+		#ifndef _DEBUG
+		}
+		#endif
+			if(strcmpargv(pg,"tin2tin")==0) OPER=TIN2TIN;
+			else if(strcmpargv(pg,"tin2stl")==0) OPER=TIN2STL;
+			else if(strcmpargv(pg,"stl2tin")==0) OPER=STL2TIN;
+		#ifdef _DEBUG
+		}
+		#endif
+		if(OPER==OPER_NONE){
 			PUTerr(u8"Operación no reconocida: "); PUTerrnl((char*)pg);
 			*argv=NULL;
 		}

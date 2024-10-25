@@ -208,6 +208,7 @@
 			}
 		}
 	}
+	if(nret!=0) goto salida; //Ningún punto aportó nada
 
 	//Eliminar puntos aislados demasiado altos
 	//TEST mira si el punto es muy alto y establece el valor de h que al menos uno de sus adyacentes debe de superar
@@ -258,6 +259,7 @@
 		}
 	}}
 
+salida:
 	pfile->file[0]='\0';
 	return nret;
 }

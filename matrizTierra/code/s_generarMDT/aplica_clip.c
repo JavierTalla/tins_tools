@@ -72,10 +72,10 @@ int trata_recorte(MatrizTierra *matriz, ClipModo clip_modo){
 		matriz->esta.nláminas++;
 		matriz->esta.ncomponentes++;
 		const uLago_t nlam=(uLago_t)matriz->esta.nláminas;
-		//copiar el cierre a la nueva última posición
-		matriz->i.cotaslagos[nlam+1]=matriz->i.cotaslagos[nlam];			matriz->i.cotaslagos[nlam]=zmin;
-		matriz->i.gruposlago[nlam+1]=matriz->i.gruposlago[nlam];		matriz->i.gruposlago[nlam]=nlam;
-		matriz->i.lagos[nlam+1]=matriz->i.lagos[nlam];						matriz->i.lagos[nlam]=LagoZVacío;
+		//En lugar de mover el elem. de cierre una posición lo escribimos ex novo por si el array era NULL (lagos puede ser NULL)
+		matriz->i.cotaslagos[nlam+1]=COTASLAGO_CIERRE;		matriz->i.cotaslagos[nlam]=zmin;
+		matriz->i.gruposlago[nlam+1]=GRUPOSLAGO_CIERRE;	matriz->i.gruposlago[nlam]=nlam;
+		matriz->i.lagos[nlam+1]=LagoZNull;								matriz->i.lagos[nlam]=LagoZVacío;
 		durchlaufe2(uEarthHeight,matriz->suelo,matriz->npuntos,flagMDT,matriz->i.flags){
 			if(ptr_b->fuera){*ptr=zmin; ptr_b->fuera=0; ptr_b->lago=nlam;}
 		}

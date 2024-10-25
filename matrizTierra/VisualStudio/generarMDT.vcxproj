@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup Label="Globals">
-    <CodePath>..\matrizTierra\code</CodePath>
+    <CodePath>..\code</CodePath>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <ProjectGuid>{7062A270-25DE-47C0-94D4-9739F99F3F90}</ProjectGuid>
   </PropertyGroup>

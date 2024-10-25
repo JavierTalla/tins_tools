@@ -41,18 +41,33 @@ int escribe_tinplano(const char8_t *ftin, const TINPlano *tin);
 /*Escribe un fichero de formato tin a partir de unos puntos y triángulos (tin) y cierta información adicional
 
 ftin: El nombre del fichero a generar
-tin: La información geométrica, así como la clase a la que pertenece cada triángulo
-uni: Unidades, simplemente para escribir en la cabecera del fichero
+tin: La información geométrica, así como la clase a la que pertenece cada triángulo. También incluye las unidades.
+	Estas se emplean simplemente para escribir en la cabecera del fichero.
 estilos: Para los triángulos. Puede ser NULL
 nestilos: Cuantos elementos del array colores han de escribirse. Puede ser 0.
 
 Return:
 	0: Todo bien
-	AT_NOMEM	No hay memoria para escribir el fichero
+	AT_NOMEM: No hay memoria para escribir el fichero
 	1-4: Otro error al intentar crear el fichero
 	>4: Se produjo algún error durante la escritura del fichero
 */
-int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni, const EstiloTriángulos1 *estilos, uint nestilos);
+int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, const EstiloTriángulos1 *estilos, uint nestilos);
+
+/*Escribe un fichero de formato tin a partir de unos puntos y triángulos (tin)
+
+ftin: El nombre del fichero a generar
+tin: La información geométrica, así como la clase a la que pertenece cada triángulo
+
+Return:
+	0: Todo bien
+	AT_NOMEM: No hay memoria para escribir el fichero
+	1-4: Otro error al intentar crear el fichero
+	>4: Se produjo algún error durante la escritura del fichero
+*/
+static inline int escribe_fichero_tin_simple(const char8_t *ftin, const TINMalla *tin){
+	return escribe_fichero_tin(ftin,tin,NULL,0);
+}
 
 //Aplana un tin
 int tinplano___tin(TINPlano *plano, const TIN *tin);
@@ -61,12 +76,23 @@ int tinplano___tin(TINPlano *plano, const TIN *tin);
 int fstl___tinplano(const char8_t *fstl, const TINPlano *tin);
 
 int lee_fichero_stl(const char8_t *ftin, TINPlano *tin);
-//Escribir un fichero stl
-//bmm indica si los valores han de pasarse a milímetros. Si es false se escribirán
-//tal como vengan en el tin (una cierta fracción de mm).
-int escribe_fichero_stl1(const char8_t *fstl, float uni_mm, const TINMalla *tin, bint bmm, uint color_default, const uint16m *colores);
-int escribe_fichero_stl2(const char8_t *fstl, float uni_mm, const TINMalla *tin, bint bmm, uint color_default, const uint16m *colores);
+/*Escribir un fichero stl
+fstl:	Nombre del fichero a escribir
+tin:	tin. Sus unidades no se emplean. En su lugar se emplea el parámetro funi.
+funi:	Valor por el que multiplicar todas las coordenadas al pasarlas al fichero. Si no se quiere, pásese 1.0f.
+color_default:	El que se escribira en la cabecera del stl. En la forma (R<<16) | (G<<8) | B.
+colores:			Puede ser NULL. Si no es NULL ha de tener (al menos) tantos elementos como el
+	máximo elemento de 'class' en los triángulos del tin. Los colores han de estar en la forma de los stl:
+	0R(5)G(5)B(5); e.d., el bit alto a 0 y siguen 5 bits por color.
 
+Return:
+	0: Todo bien
+	AT_NOMEM: No hay memoria para escribir el fichero
+	1-4: Otro error al intentar crear el fichero
+	>4: Se produjo algún error durante la escritura del fichero
+*/
+int escribe_fichero_stl1(const char8_t *fstl, const TINMalla *tin, float funi, uint color_default, const uint16m *colores);
+int escribe_fichero_stl2(const char8_t *fstl, const TINMalla *tin, float funi, uint color_default, const uint16m *colores);
 
 
 //Multiplica todo el tin por esc
@@ -84,8 +110,11 @@ typedef uint16m (*tclass_from_vclasses)(umint f1, umint f2, umint f3);
 
 /*Genera una estructura tin en memoria a partir de una matriz de datos sint16m
 
+	tin: Apunta a una estuctura tin vacía. Se rellenará
+	matriz: La matriz con datos de Z a partir de la cual generar el tin.
 	npx,npy: Dimensiones de la matriz
 	pix: Paso de píxel en la matriz, en las unidades del tin. Por ejemplo un 6 indica '6 unidades'.
+			Si no se sabe qué pasar, pásese 1.
 	bcompacto: Si se generará un fichero más compacto. La diferencia está en las diagonales de los
 			cuadrados de la malla que se escogen para la triangulación. Si bcompacto es true se tomará
 			siempre la misma, lo que permite reducir el tamaño del fichero. Si es false, el programa
@@ -106,32 +135,46 @@ Return values:
 	0: Todo bien
 	AT_NOMEM		//No hay memoria para generar el tin
 
-	La estructura TINMalla no almacena unidades de ningún tipo. Es adimensional, en sentido literal.
-	Si npx<2 o npy<2 establece los punteros de tin a NULL y devuelve sin hacer nada. En caso contrario
-reserva memoria para tin->p_indiv.ppio y tin->triángulos.ppio. Si el valor devuelo es 0 la memoria habrá
-que liberarla. Si se devuelve !=0, los punteros tin->p_indiv.ppio y tin->triángulos.ppio quedarán a NULL.
+	La estructura TINMalla incluye un campo TinUnidad por si se quiere asignar luego. La función pone
+que las undades son metros.
+	Si npx<2 o npy<2 establece los punteros de tin a NULL y devuelve sin hacer nada. Si la función devuelve
+AT_NOMEM se libera lo que se hubiera reservado (e.d., como si no hubiera hecho nada). En caso contrario
+reserva memoria que habrá que liberar, p.e. con TINMalla_free_null(*tin).
 */
 int tin___matriz16(TINMalla *tin, const sint16m *matriz, uint pix, uint npx, uint npy, bint bcompacto, const uint8m *clases, Tclass___Vclass kak_tclass, tclass_from_vclasses func);
 
 /*Genera una estructura tin en memoria a partir de una matriz de datos sint16m
 
 	tin: El tin, que la función rellenará.
-	matriz: La matriz, con npx x npy datos.
+	matriz: La matriz, con npx x npy valores de Z.
 	pix: Paso de píxel en la matriz, en las unidades del tin. Por ejemplo un 6 indica '6 unidades'.
+			Si no se sabe qué pasar, pásese 1.
 	npx,npy: Dimensiones de la matriz
 
 Return values:
 	0: Todo bien
 	AT_NOMEM		//No hay memoria para generar el tin
 
-	La estructura TINMalla no almacena unidades de ningún tipo. Es adimensional, en sentido literal.
-	Si npx<2 o npy<2 establece los punteros de tin a NULL y devuelve sin hacer nada. En caso contrario
-reserva memoria para tin->p_indiv.ppio y tin->triángulos.ppio. Si el valor devuelo es 0 la memoria habrá
-que liberarla. Si se devuelve !=0, los punteros tin->p_indiv.ppio y tin->triángulos.ppio quedarán a NULL.
+	La estructura TINMalla incluye un campo TinUnidad por si se quiere asignar luego. La función pone
+que las undades son metros.
+	Si npx<2 o npy<2 establece los punteros de tin a NULL y devuelve sin hacer nada. Si la función devuelve
+AT_NOMEM se libera lo que se hubiera reservado (e.d., como si no hubiera hecho nada). En caso contrario
+reserva memoria que habrá que liberar, p.e. con TINMalla_free_null(*tin).
 */
 static inline int tin___matriz16_plain(TINMalla *tin, const sint16m *matriz, uint pix, uint npx, uint npy){
 	return tin___matriz16(tin,matriz,pix,npx,npy,true,NULL,0,NULL);
 }
+
+/*Genera una estructura tin en memoria a partir de una matriz de datos sint16m
+Como tin___matriz16 pero incluye el parámetro mask. V. descripción de tin___matriz16.
+
+	mask: Los puntos con mask=0 se excluyen del tin generado.
+
+Return values:
+	0: Todo bien
+	AT_NOMEM		//No hay memoria para generar el tin
+*/
+int tin___matriz16_mask(TINMalla *tin, const sint16m *matriz, uint pix, uint npx, uint npy, const bool8 *mask, const uint8m *clases, Tclass___Vclass kak_tclass, tclass_from_vclasses func);
 
 /* Genera una estructura tin en memoria a partir de una matriz de datos bien sint16m.
 

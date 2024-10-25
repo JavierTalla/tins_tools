@@ -71,13 +71,18 @@ int escribe_tinplano(const char8_t *ftin, const TINPlano *tin){
 	return buf.error_code;
 }
 
-int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni, const EstiloTriángulos1 *estilos, uint nestilos){
+int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, const EstiloTriángulos1 *estilos, uint nestilos){
 	int nret;
 	Buffer_bo buf;
 	TinCabecera cabe;
 	TinPuntosRetícula pmalla;
 	TriángulosMalla tmalla[2];
-	uint npmalla, ntmalla;
+	uint npmalla;
+	struct{
+		uint malla;
+		uint incr;
+		uint indiv;
+	} nT;
 	struct{
 		uint p_malla;
 		uint p_indiv;
@@ -91,7 +96,6 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 	ifnzunlike(nret=boopen_utf8(&buf,ftin,ATBYTES_LITTLE_ENDIAN)) return nret;
 
 	npmalla=tin->malla.ny*tin->malla.nx; //Número de puntos en la malla
-	ntmalla=(tin->malla.nx-1)*(tin->malla.ny-1)*2; //Número de triángulos de la malla
 
 	/* Lo que ocupará cada bloque de elementos */
 
@@ -99,22 +103,36 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 	tamaños.p_malla=uintsizeof(TinPuntosRetícula)+((npmalla+1)>>1);
 	//Puntos individuales. Cada punto indiv. son 3 ssints
 	tamaños.p_indiv=(tin->p_indiv.n)*3;
-	if(tin->bdiag){
-		//Triángulos en malla regular. Dos series más el EOUIA del final
-		tamaños.t_malla=2*uintsizeof(TriángulosMalla)+1;
-		tamaños.t_incs=0;
+	//t_malla, t_incs y t_indiv
+	if(tin->bdiag!=0){
+		uint ntmalla=(tin->malla.nx-1)*(tin->malla.ny-1)*2; //Número de triángulos de la malla
+		if(tin->bdiag==2){
+			nT.malla=ntmalla;
+			nT.incr=0;
+			//Triángulos en malla regular. Dos series más el EOUIA del final
+			tamaños.t_malla=2*uintsizeof(TriángulosMalla)+1;
+			tamaños.t_incs=0;
+		}else{ //1
+			nT.malla=0;
+			nT.incr=ntmalla;
+			tamaños.t_malla=0;
+			//Triángulos en modo incrementos: La cabecera son 2 words; a0 otro, b0 y c0 en otro,
+			//y para los demás triángulos, 3 s16int por triángulo.
+			tamaños.t_incs=3+((3*ntmalla)>>1);
+		}
+		nT.indiv=tin->triangles.n-ntmalla;
 	}else{
-		tamaños.t_malla=0;
-		//Triángulos en modo incrementos: La cabecera son 2 words; a0 otro, b0 y c0 en otro,
-		//y para los demás triángulos, 3 s16int por triángulo.
-		tamaños.t_incs=3+((3*ntmalla)>>1);
+		nT.incr=nT.malla=0;
+		tamaños.t_incs=tamaños.t_malla=0;
+		nT.indiv=tin->triangles.n;
 	}
 	//Triángulos individuales. Cada triángulo son 3 uints (los vértices)
-	tamaños.t_indiv=3*(tin->triangles.n-ntmalla);
+	tamaños.t_indiv=3*nT.indiv;
+
 	//Estilos de los triángulos: Un uint para indicar el formato, otro para el número de estilos
 	//definidos, y luego los estilos.
 	if(estilos==NULL || nestilos==0) tamaños.estilos_t=0;
-	else tamaños.estilos_t=2+nestilos*uintsizeof(EstiloTriángulos1); //3 estilos
+	else tamaños.estilos_t=2+nestilos*uintsizeof(EstiloTriángulos1);
 	//Clase a la que pertenece cada triángulo: Un uint que indica que la clase de cada triángulo
 	//ocupa 2 bits. Luego divup(nt,16) uints con los números de clase.
 	tamaños.clases_t=1+divup(tin->triangles.n,16);
@@ -124,9 +142,9 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 
 	/* Cabecera */
 	cabe.datos.W0=uint___u1111(0,'N','I','T'); //Identificador del formato y número de versión
-	cabe.datos.tipos_dato=uint___u1111(0,0,uni.tipo,TIN_sint32); //libre, libre, 'uni_tipo', 'sint32'
-	if(uni.tipo==UniTin_m_float) IO_SINGLE___float(&cabe.datos.unidades,uni.valor.f);
-	else cabe.datos.unidades=uni.valor.u;
+	cabe.datos.tipos_dato=uint___u1111(0,0,tin->uni.tipo,TIN_sint32); //libre, libre, 'uni_tipo', 'sint32'
+	if(tin->uni.tipo==UniTin_m_float) IO_SINGLE___float(&cabe.datos.unidades,tin->uni.valor.f);
+	else cabe.datos.unidades=tin->uni.valor.u;
 	//puntos en retícula
 	cabe.datos.p_retic_pos=uintsizeof(TinCabecera);
 	cabe.datos.p_retic_n=npmalla;
@@ -136,33 +154,29 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 	//puntos individuales
 	cabe.datos.p_indiv_pos=cabe.datos.p_retic_pos+tamaños.p_malla;
 	cabe.datos.p_indiv_n=tin->p_indiv.n;
-	//triángulos en malla y en incrementos
-	uint npos_tbloque=cabe.datos.p_indiv_pos+tamaños.p_indiv;
-	if(tamaños.t_malla!=0){
-		cabe.datos.t_malla_pos=npos_tbloque;
-		cabe.datos.t_malla_n=ntmalla;
-		cabe.datos.t_inc_pos=Я;
-		cabe.datos.t_inc_n=0;
-	}else{
-		cabe.datos.t_malla_pos=Я;
-		cabe.datos.t_malla_n=0;
-		cabe.datos.t_inc_pos=npos_tbloque;
-		cabe.datos.t_inc_n=ntmalla;
-	}
-	//triángulos individuales
-	cabe.datos.t_indiv_pos=npos_tbloque+tamaños.t_malla+tamaños.t_incs;
-	cabe.datos.t_indiv_n=tin->triangles.n-ntmalla;
+
+	//triángulos
+	cabe.datos.t_malla_n	=nT.malla;
+	cabe.datos.t_inc_n		=nT.incr;
+	cabe.datos.t_indiv_n	=nT.indiv;
+	cabe.datos.t_malla_pos	=cabe.datos.p_indiv_pos+tamaños.p_indiv;
+	cabe.datos.t_inc_pos		=cabe.datos.t_malla_pos+tamaños.t_malla;
+	cabe.datos.t_indiv_pos	=cabe.datos.t_inc_pos+tamaños.t_incs;
 	//Estilos de los puntos (no hay)
 	cabe.datos.estilos_p_pos=Я;
 	//Estilos de los triángulos
-	cabe.datos.estilos_t_pos=cabe.datos.t_indiv_pos+tamaños.t_indiv; //Si no hay, lo pondremos a Я debajo
+	cabe.datos.estilos_t_pos=cabe.datos.t_indiv_pos+tamaños.t_indiv;
 	//Clase de cada punto y estilos indiv. de puntos (no hay)
 	cabe.datos.clases_p_pos=Я;
 	cabe.datos.estilo_pindiv_pos=Я;
 	//Clase de cada triángulo y estilos indiv. de triángulos
 	cabe.datos.clases_t_pos=cabe.datos.estilos_t_pos+tamaños.estilos_t;
-	if(tamaños.estilos_t==0) cabe.datos.estilos_t_pos=Я; //No lo pusimos antes para emplearlo para clases_t_pos
 	cabe.datos.estilo_tindiv_pos=Я; //No hay
+
+	if(tamaños.t_malla==0) cabe.datos.t_malla_pos=Я;
+	if(tamaños.t_incs==0) cabe.datos.t_inc_pos=Я;
+	if(tamaños.t_indiv==0) cabe.datos.t_inc_pos=Я;
+	if(tamaños.estilos_t==0) cabe.datos.estilos_t_pos=Я;
 
 	/* Encabezado de los puntos en retícula */
 	pmalla.m=tin->malla.ny;
@@ -181,7 +195,7 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 	pmalla.ΔX=0; pmalla.ΔY=0; pmalla.ΔZ=1;
 
 	/* Triángulos en malla, si hay */
-	if(tin->bdiag){
+	if(nT.malla!=0){
 		tmalla[0].m=pmalla.m-1;
 		tmalla[0].n=pmalla.n-1;
 		tmalla[0].a0=pmalla.n; tmalla[0].b0=pmalla.n+1; tmalla[0].c0=0;
@@ -220,14 +234,15 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 		boput_32(&buf,(uint)p->Z);
 	}}
 
-	if(tamaños.t_malla!=0){
+	if(nT.malla!=0){
 		/*Escribir los triángulos en malla*/
 		bowrite_uints(&buf,(uint*)&tmalla,uintsizeof(tmalla));
 		boput_32(&buf,Я);
-	}else{
+	}
+	if(nT.incr!=0){
 		/*Escribir los triángulos en incrementos*/
 		//La cabecera
-		boput_32(&buf,ntmalla); //Número de triángulos definidos
+		boput_32(&buf,nT.incr); //Número de triángulos definidos
 		boput_32(&buf,Я); //Siguiente (no hay siguiente)
 		//Los puntos. Como el formato establece que han de representarse en complemento a 2,
 		//hacemos la resta y la reducimos a uint16m sin más.
@@ -238,7 +253,7 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 		boput_1616(&buf,(uint16m)(p->c-p->b),(uint16m)(p->b-p->a));
 		d=p++->c;
 		//resto de triángulos
-		dontimes((ntmalla-1)>>1,){ //No pasarse del último triángulo
+		dontimes((nT.incr-1)>>1,){ //No pasarse del último triángulo
 			boput_1616(&buf,(uint16m)(p->b-p->a),(uint16m)(p->a-d));
 			uint16m s1=(uint16m)(p->c-p->b);
 			d=p++->c;
@@ -247,17 +262,16 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 			boput_1616(&buf,(uint16m)(p->c-p->b),(uint16m)(p->b-p->a));
 			d=p++->c;
 		}
-		//Si (ntmalla-1) es impar falta el último
-		if((ntmalla-1)&1){
+		//Si (nT.incr-1) es impar falta el último
+		if((nT.incr-1)&1){
 			boput_1616(&buf,(uint16m)(p->b-p->a),(uint16m)(p->a-d));
 			boput_1616(&buf,0,(uint16m)(p->c-p->b));
 			p++;
 		}
 	}
-
-	//Escribir los triángulos individuales
-	{durchlaufep(const TinTriangle,tin->triangles.ppio+ntmalla,tin->triangles.n-ntmalla){
-		boput_32(&buf,p->a); boput_32(&buf,p->b); boput_32(&buf,p->c);
+	if(nT.indiv!=0){
+		durchlaufep(const TinTriangle,tin->triangles.ppio+nT.malla+nT.incr, nT.indiv){
+			boput_32(&buf,p->a); boput_32(&buf,p->b); boput_32(&buf,p->c);
 	}}
 
 	//Escribir los estilos de los triángulos
@@ -270,13 +284,12 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 	//Escribir la clase a que pertenece cada triángulo
 	const TinTriangle *p, *pend;
 	boput_32(&buf,2); //2 bits per triángulos
-	if(tamaños.t_malla!=0){ //Los triángulos no se han escrito al fichero en el orden en que están en tin->triangles
+	if(nT.malla!=0){ //Los triángulos no se han escrito al fichero en el orden en que están en tin->triangles
 		uint u;
 		p=tin->triangles.ppio;
-		pend=p+ntmalla;
-		ntmalla>>=1;
+		pend=p+nT.malla;
 		//La primera malla (pares)
-		dontimes(ntmalla/16,){
+		dontimes((nT.malla>>1)/16,){
 			u=0;
 			u|=(p->class&3);		p+=2;		u|=(p->class&3)<<2;	p+=2;
 			u|=(p->class&3)<<4;	p+=2;		u|=(p->class&3)<<6;	p+=2;
@@ -322,9 +335,8 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 		for(shift=0; p!=pend; p+=2, shift+=2){
 			u|=(p->class&3)<<shift;
 		}
-		ntmalla<<=1;
 		pend=tin->triangles.ppio+tin->triangles.n;
-		p=tin->triangles.ppio+ntmalla;
+		p=tin->triangles.ppio+nT.malla;
 		for(;shift!=32 && p!=pend; p++, shift+=2){
 			u|=(p->class&3)<<shift;
 		}}
@@ -359,7 +371,7 @@ int escribe_fichero_tin(const char8_t *ftin, const TINMalla *tin, TinUnidad uni,
 			boput_32(&buf,u);
 		}
 	}
-	if(p!=pend){
+	if(p!=pend){ //El resto
 		uint u=0;
 		for(uint8m c=0; p!=pend; p++, c+=2){
 			u|=(p->class&3)<<c;

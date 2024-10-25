@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup Label="Globals">
-    <CodePath>..\tins\code</CodePath>
+    <CodePath>..\code</CodePath>
     <ConfigurationType>Application</ConfigurationType>
     <ProjectGuid>{40D0821A-8C4A-4B67-B672-B3C84943D5F3}</ProjectGuid>
   </PropertyGroup>

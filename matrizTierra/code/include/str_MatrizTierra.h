@@ -67,6 +67,15 @@ typedef struct{
 						//indica un elemento vacío. Un valor con cota y depth MAX_UEARTHHEIGHT indica el final.
 } InterpretaciónMatriz;
 
+/*Macros para los elementos del array LagoZ de InterpretaciónMatriz*/
+
+#define GRUPOSLAGO_CIERRE 0
+#define COTASLAGO_CIERRE MAX_UEARTHHEIGHT
+//Mirar si es el elemento que cierra el array
+#define LAGOZ_end(l) ((l).depth==MAX_UEARTHHEIGHT)
+//Se entiende que cuando se emplea esta macro ya se sabe que l no es el lago que cierra el array
+#define LAGOZ_is_empty(l) ((l).cota==MAX_UEARTHHEIGHT)
+
 #define FLAG_MATRIZ_HAYTIERRA 1
 #define FLAG_MATRIZ_HAYAGUA 2
 #define FLAG_MATRIZ_HAYFONDOMAR 4 //Implica HAYAGUA. Equivale a zbounds.maxdp!=0 y a algún dplago>0.
@@ -98,6 +107,8 @@ typedef struct{
 	EstadísticasMatriz esta;
 	uEarthHeight zmax_aguaborde; //Cota máxima de las láminas de agua que llegan hasta el borde. 0 si no hay ninguna.
 } MatrizTierra;
+
+#define MatrizTierra_superf(m) ((m)->cielo==NULL? (m)->suelo : (m)->cielo)
 
 #define MatrizTierra_setNULL(m) do{\
 	(m).cielo=(m).suelo=NULL;\
@@ -146,10 +157,3 @@ typedef struct{
 //Pasan de un valor almacenado en la matriz al valor en el terreno en metros
 #define MATRIZ_GROUND___STORED_ROUNDUP(z,zb) ((EarthHeight)(((z)+(zb).escala-1)/(zb).escala)+(zb).offset)
 #define MATRIZ_GROUND___STORED_ROUNDDOWN(z,zb) ((EarthHeight)((z)/(zb).escala)+(zb).offset)
-
-/*Macros para los elementos del array LagoZ de InterpretaciónMatriz*/
-
-//Mirar si es el elemento que cierra el array
-#define LAGOZ_end(l) ((l).depth==MAX_UEARTHHEIGHT)
-//Se entiende que cuando se emplea esta macro ya se sabe que l no es el lago que cierra el array
-#define LAGOZ_is_empty(l) ((l).cota==MAX_UEARTHHEIGHT)

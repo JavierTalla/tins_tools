@@ -264,7 +264,7 @@ Consta este bloque de varias definiciones de series de triángulos. Cada una de 
 Δ1=(`Δa1,Δb1,Δc1`) y Δn=(`Δan,Δbn,Δcn`). Los números de vértice de los m x n triángulos son:
 ```
 T0,	T0+Δ1, T0+2Δ1, ... , T0+(n-1)Δ1,
-T0+Δn,	P0+Δn+Δ1,   ... , T0+Δn+(n-1)Δ1,
+T0+Δn,	T0+Δn+Δ1,   ... , T0+Δn+(n-1)Δ1,
 T0+2Δn,		   ... , T0+2Δn+(n-1)Δ1,
 ...
 T0+(m-1)Δn,    ... , T0+(m-1)Δn+(n-1)Δ1.

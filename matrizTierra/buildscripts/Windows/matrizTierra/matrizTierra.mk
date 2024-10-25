@@ -1,9 +1,8 @@
 #See linux_base.mk for invocation options
-progname:=ficheroconfig
-exename:=fconfig
+progname:=matrizTierra
 rootpath=../../../
-ATinclude:=$(rootpath)AerotriLibs/include/
-ATlibs:=$(rootpath)AerotriLibs/lib/Linux-amd64/
+ATinclude:=$(rootpath)../AerotriLibs/include/
+ATlibs:=$(rootpath)../AerotriLibs/lib/Linux-amd64/
 programpath:=$(rootpath)code/
 thpath:=$(programpath)s_*/
 hpath:=$(programpath)include*/

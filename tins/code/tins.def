@@ -10,6 +10,7 @@ EXPORTS
 	escribe_fichero_stl1
 	escribe_fichero_stl2
 	tin___matriz16
+	tin___matriz16_mask
 	tingrueso___matriz16_size
 	reescala_tin
 	reescalaZ_tin

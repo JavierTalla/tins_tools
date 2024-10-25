@@ -160,8 +160,6 @@ int fstl___tinplano(const char8_t *fstl, const TINPlano *tin){
 	Buffer_bo buf;
 	uint cabecera[STL_CABECERA_UINTSIZEOF]={0};
 
-	uint COUNT=0;
-
 	ifnzunlike(nret=boopen_utf8(&buf,fstl,ATBYTES_LITTLE_ENDIAN)) return nret;
 
 	cabecera[0]=((uint)'O'<<24) | ((uint)'L'<<16) | ((uint)'O'<<8) | 'C'; //Assumes ASCII-compatible execution character encoding
@@ -193,11 +191,7 @@ int fstl___tinplano(const char8_t *fstl, const TINPlano *tin){
 			ip=3**p++;		A.X=tin->puntos.in[ip];		A.Y=tin->puntos.in[ip+1];	A.Z=tin->puntos.in[ip+2];
 			ip=3**p++;		B.X=tin->puntos.in[ip];		B.Y=tin->puntos.in[ip+1];	B.Z=tin->puntos.in[ip+2];
 			ip=3**p++;		C.X=tin->puntos.in[ip];		C.Y=tin->puntos.in[ip+1];	C.Z=tin->puntos.in[ip+2];
-			//write_triangle_resto(&buf,A,B,C,1.0f,resto,c);
-
-			if(COUNT==0) write_triangle_resto(&buf,A,B,C,2.0f,resto,c);
-			else write_triangle_resto(&buf,A,B,C,1.0f,resto,c);
-			COUNT++;
+			write_triangle_resto(&buf,A,B,C,1.0f,resto,c);
 		}
 		if(tin->nt&1){ //Último triángulo suelto
 			PuntoXYZ_ssint A,B,C;
@@ -257,11 +251,10 @@ int fstl___tinplano(const char8_t *fstl, const TINPlano *tin){
 	return buf.error_code;
 }
 
-int escribe_fichero_stl1(const char8_t *fstl, float Vmm, const TINMalla *tin, bint bmm, uint color_default, const uint16m *colores){
+int escribe_fichero_stl1(const char8_t *fstl, const TINMalla *tin, float funi, uint color_default, const uint16m *colores){
 	int nret;
 	Buffer_bo buf;
 	uint cabecera[STL_CABECERA_UINTSIZEOF];
-	if(!bmm) Vmm=1.0f;
 
 	ifnzunlike(nret=boopen_utf8(&buf,fstl,ATBYTES_LITTLE_ENDIAN)) return nret;
 
@@ -281,19 +274,19 @@ int escribe_fichero_stl1(const char8_t *fstl, float Vmm, const TINMalla *tin, bi
 		A=getP(tin,p->a);
 		B=getP(tin,p->b);
 		C=getP(tin,p->c);
-		write_triangle(&buf,A,B,C,Vmm);
+		write_triangle(&buf,A,B,C,funi);
 
 		//attr. count. Se guarda el color
-		if(p->class==0) resto=0;
+		if(p->class==0 || colores==NULL) resto=0;
 		else resto=0x8000|colores[p->class];
 
 		p++;
 		A=getP(tin,p->a);
 		B=getP(tin,p->b);
 		C=getP(tin,p->c);
-		if(p->class==0) c=0;
+		if(p->class==0 || colores==NULL) c=0;
 		else c=0x8000|colores[p->class];
-		write_triangle_resto(&buf,A,B,C,Vmm,resto,c);
+		write_triangle_resto(&buf,A,B,C,funi,resto,c);
 	}
 	if(tin->triangles.n&1){ //Último triángulo suelto
 		PuntoXYZ_ssint A,B,C;
@@ -302,9 +295,9 @@ int escribe_fichero_stl1(const char8_t *fstl, float Vmm, const TINMalla *tin, bi
 		A=getP(tin,p->a);
 		B=getP(tin,p->b);
 		C=getP(tin,p->c);
-		write_triangle(&buf,A,B,C,Vmm);
+		write_triangle(&buf,A,B,C,funi);
 
-		if(p->class==0) resto=0;
+		if(p->class==0 || colores==NULL) resto=0;
 		else resto=0x8000|colores[p->class];
 		boput_1616(&buf,0,resto);
 	}
@@ -313,7 +306,7 @@ int escribe_fichero_stl1(const char8_t *fstl, float Vmm, const TINMalla *tin, bi
 	return buf.error_code;
 }
 
-int escribe_fichero_stl2(const char8_t *fstl, float Vmm, const TINMalla *tin, bint bmm, uint color_default, const uint16m *colores){
+int escribe_fichero_stl2(const char8_t *fstl, const TINMalla *tin, float funi, uint color_default, const uint16m *colores){
 	int nret;
 	Buffer_bo buf;
 	uint cabecera[STL_CABECERA_UINTSIZEOF];
@@ -344,19 +337,19 @@ int escribe_fichero_stl2(const char8_t *fstl, float Vmm, const TINMalla *tin, bi
 		P.X=v1.Y*v2.Z-v1.Z*v2.Y;
 		P.Y=v1.Z*v2.X-v1.X*v2.Z;
 		P.Z=v1.X*v2.Y-v1.Y*v2.X;
-		if(!bmm){
+		if(funi==1.0f){
 			IO_SINGLE___float(pt,(float)P.X); pt++;	IO_SINGLE___float(pt,(float)P.Y);  pt++;	IO_SINGLE___float(pt,(float)P.Z);  pt++;
 			IO_SINGLE___float(pt,(float)A.X); pt++;	IO_SINGLE___float(pt,(float)A.Y);  pt++;	IO_SINGLE___float(pt,(float)A.Z);  pt++;
 			IO_SINGLE___float(pt,(float)B.X); pt++;	IO_SINGLE___float(pt,(float)B.Y);  pt++;	IO_SINGLE___float(pt,(float)B.Z);  pt++;
 			IO_SINGLE___float(pt,(float)C.X); pt++;	IO_SINGLE___float(pt,(float)C.Y);  pt++;	IO_SINGLE___float(pt,(float)C.Z);  pt++;
 		}else{
-			IO_SINGLE___float(pt,(float)P.X*Vmm); pt++;	IO_SINGLE___float(pt,(float)P.Y*Vmm);  pt++;	IO_SINGLE___float(pt,(float)P.Z*Vmm);  pt++;
-			IO_SINGLE___float(pt,(float)A.X*Vmm); pt++;	IO_SINGLE___float(pt,(float)A.Y*Vmm);  pt++;	IO_SINGLE___float(pt,(float)A.Z*Vmm);  pt++;
-			IO_SINGLE___float(pt,(float)B.X*Vmm); pt++;	IO_SINGLE___float(pt,(float)B.Y*Vmm);  pt++;	IO_SINGLE___float(pt,(float)B.Z*Vmm);  pt++;
-			IO_SINGLE___float(pt,(float)C.X*Vmm); pt++;	IO_SINGLE___float(pt,(float)C.Y*Vmm);  pt++;	IO_SINGLE___float(pt,(float)C.Z*Vmm);  pt++;
+			IO_SINGLE___float(pt,(float)P.X*funi); pt++;	IO_SINGLE___float(pt,(float)P.Y*funi);  pt++;	IO_SINGLE___float(pt,(float)P.Z*funi);  pt++;
+			IO_SINGLE___float(pt,(float)A.X*funi); pt++;	IO_SINGLE___float(pt,(float)A.Y*funi);  pt++;	IO_SINGLE___float(pt,(float)A.Z*funi);  pt++;
+			IO_SINGLE___float(pt,(float)B.X*funi); pt++;	IO_SINGLE___float(pt,(float)B.Y*funi);  pt++;	IO_SINGLE___float(pt,(float)B.Z*funi);  pt++;
+			IO_SINGLE___float(pt,(float)C.X*funi); pt++;	IO_SINGLE___float(pt,(float)C.Y*funi);  pt++;	IO_SINGLE___float(pt,(float)C.Z*funi);  pt++;
 		}
 		uint16m c; //Color
-		if(p->class==0) c=0;
+		if(p->class==0 || colores==NULL) c=0;
 		else c=0x8000|colores[p->class];
 
 		bowrite_SINGLEs(&buf,trian,12);

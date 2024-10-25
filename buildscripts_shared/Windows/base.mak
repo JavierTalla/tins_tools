@@ -40,6 +40,7 @@ linkerexe=link.exe /OUT:$(outpath)$(exename) $(linkeropts)
 
 !ifdef exename
 exename=$(exename)$(letra).exe
+exepdbname=$(outpath)$(exename).pdb
 both: $(BUILIR) $(pathyname).dll $(outpath)$(exename)
 !else
 both: $(BUILIR) $(pathyname).dll
@@ -49,7 +50,7 @@ $(BUILIR): ; -mkdir $(BUILIR)
 
 $(outpath)$(exename): $(pathyname).dll $(exe_libs) $(programpath)main/*.*
 	$(compiler) $(programpath)main/main.c
-	$(linkerexe) $(builddir)main.obj $(pathyname).lib ucrt$(letra).lib Win-$(arch)/Atcrt$(letra).lib $(pathyname).lib $(exe_libs)
+	$(linkerexe) /PDB:$(exepdbname) $(builddir)main.obj $(pathyname).lib ucrt$(letra).lib Win-$(arch)/Atcrt$(letra).lib $(pathyname).lib $(exe_libs)
 	copy $(outpath)$(exename) $(install_path)
 
 !INCLUDE build-win.mak

@@ -362,10 +362,19 @@ defineVector(sint16m)
 defineVector(PuntoXYZ_ssint)
 defineVector(TinTriangle)
 
-//Si bmalla es true hay 2*(nx-1)*(ny-1) triángulos rellenando la malla, todos en diagonal
-//siguiento la misma dirección. Si es false, ese número de triángulos están iniciando el
-//vector triangles, y se pueden escribir en incrementos.
+/* Tin con triángulos en malla y otros individuales.
+bdiag=0:
+	No se presupone nada respecto a los triángulos. Pueden llenar la malla o no.
+bdiag=1:
+	La malla da lugar a ntm=2*(nx-1)*(ny-1) triángulos, que están al principio del vector triangles.
+bdiag=2:
+	La malla da lugar a ntm=2*(nx-1)*(ny-1) triángulos, que están al principio del vector triangles.
+	Todos los triángulos toman para cada cuadradito de la malla la misma diagonal.
+
+Aunque sólo existan los triángulos de la malla, no se requiere p_indiv.n=0. Simplemente,
+estos puntos no se emplearían.*/
 typedef struct strTINMalla{
+	TinUnidad uni;
 	RECT_ssint minmax;
 	struct{
 		ssint x0,y0;
@@ -375,9 +384,9 @@ typedef struct strTINMalla{
 	} malla;
 	Vector_PuntoXYZ_ssint p_indiv;
 	Vector_TinTriangle triangles;
-	bint bdiag;
+	umint bdiag;
 } TINMalla;
 
-#define TINMalla_free_nullif(tin) do{\
-	free_null_if((tin).malla.z.ppio); free_null_if((tin).p_indiv.ppio); free_null_if((tin).triangles.ppio);\
+#define TINMalla_free_null(tin) do{\
+	free_null((tin).malla.z.ppio); free_null((tin).p_indiv.ppio); free_null((tin).triangles.ppio);\
 }while(0)
